@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
+import com.example.ouruniversity.R;
 
 public class Boardview extends Activity {
 	String html;

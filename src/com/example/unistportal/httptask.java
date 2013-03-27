@@ -1,22 +1,10 @@
 package com.example.unistportal;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.KeyManagementException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.cert.X509Certificate;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
@@ -46,12 +34,13 @@ import android.os.Message;
 import android.util.Log;
 
 public class httptask extends AsyncTask<String, String, String>{
-	ArrayList<String> para;
-	ArrayList<String> val;
-	public String result;
-	HttpClient httpclient;
-	Handler handle;
-	public void makehandler(Handler h)
+	static ArrayList<String> para = new ArrayList<String>();
+	static ArrayList<String> val = new ArrayList<String>();
+	static public String result;
+	static HttpClient httpclient;
+	static Handler handle;
+	static boolean login = false;
+	public static void makehandler(Handler h)
 	{
 		handle = h;
 	}
@@ -61,17 +50,23 @@ public class httptask extends AsyncTask<String, String, String>{
 		para = new ArrayList<String>();
 		val = new ArrayList<String>();
 	}
-	public void makeHttpPost(String param, String value)
+	public httptask(HttpClient ht)
+	{
+		httpclient = ht;
+		para = new ArrayList<String>();
+		val = new ArrayList<String>();
+	}
+	public static void makeHttpPost(String param, String value)
 	{
 		para.add(param);
 		val.add(value);
 	}
-	public void clearPOST()
+	public static void clearPOST()
 	{
 		para.clear();
 		val.clear();
 	}
-	public String sendGETString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
+	public static String sendGETString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
 			{
 		String u = url;
 		int len = 0;
@@ -99,10 +94,10 @@ public class httptask extends AsyncTask<String, String, String>{
 		Log.e("get", u);
 		HttpGet httpPost = new HttpGet(u);
 		/**
-		 * Https SSL ∫∏æ» ≈ÎΩ≈ πÊΩƒ √≥∏Æ∏¶ ¿ß«— ¿Œ¡ı √≥∏Æ ∫Œ∫–
+		 * Https SSL Î≥¥Ïïà ÌÜµÏã† Î∞©Ïãù Ï≤òÎ¶¨Î•º ÏúÑÌïú Ïù∏Ï¶ù Ï≤òÎ¶¨ Î∂ÄÎ∂Ñ
 		 */
 
-		// º”µµ∞° ª°∂Û¡¯¥Ÿ∞Ì «‘..§ª§ª
+		// ÏÜçÎèÑÍ∞Ä Îπ®ÎùºÏßÑÎã§Í≥† Ìï®..„Öã„Öã
 		//httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 		//httpclient.getParams().setParameter("http.connection.timeout", 60000);
 		//httpclient.getParams().setParameter("http.socket.timeout", 60000);
@@ -116,7 +111,7 @@ public class httptask extends AsyncTask<String, String, String>{
 
 		return response;
 			}
-	public String sendPOSTString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
+	public static String sendPOSTString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
 			{
 
 		HttpPost httpPost = new HttpPost(url);
@@ -145,10 +140,10 @@ public class httptask extends AsyncTask<String, String, String>{
 		}
 
 		/**
-		 * Https SSL ∫∏æ» ≈ÎΩ≈ πÊΩƒ √≥∏Æ∏¶ ¿ß«— ¿Œ¡ı √≥∏Æ ∫Œ∫–
+		 * Https SSL Î≥¥Ïïà ÌÜµÏã† Î∞©Ïãù Ï≤òÎ¶¨Î•º ÏúÑÌïú Ïù∏Ï¶ù Ï≤òÎ¶¨ Î∂ÄÎ∂Ñ
 		 */
 
-		// º”µµ∞° ª°∂Û¡¯¥Ÿ∞Ì «‘..§ª§ª
+		// ÏÜçÎèÑÍ∞Ä Îπ®ÎùºÏßÑÎã§Í≥† Ìï®..„Öã„Öã
 		//httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 		//httpclient.getParams().setParameter("http.connection.timeout", 60000);
 		//httpclient.getParams().setParameter("http.socket.timeout", 60000);
@@ -161,8 +156,11 @@ public class httptask extends AsyncTask<String, String, String>{
 
 		return response;
 		}
-
-	public HttpClient getNewHttpClient()
+	public static void setHttpClient(HttpClient ht)
+	{
+		httpclient = ht;
+	}
+	public static HttpClient getNewHttpClient()
 	{
 		try
 		{
@@ -194,7 +192,7 @@ public class httptask extends AsyncTask<String, String, String>{
 			return new DefaultHttpClient();
 		}
 	}
-	public String send(String url)
+	public static String send(String url)
 	{
 
 		try {
@@ -208,12 +206,16 @@ public class httptask extends AsyncTask<String, String, String>{
 		}
 		return result;
 	}
-	@Override
-	protected String doInBackground(String... params) {
-
-		try {
-			result = sendGETString(params[0], para, val, true);
-			//this.clearPOST();
+	static protected void login(String id, String pass) throws SocketTimeoutException, IOException
+	{
+		int c=0;
+		if(!login)
+		{
+			makeHttpPost("loginid",id);
+			makeHttpPost("password",pass);
+			result = sendGETString("https://portal.unist.ac.kr/EP/web/login/login_chk.jsp", para, val, true);
+			Log.d("dc", result);
+			//clearPOST();
 			result = result.substring(result.indexOf("name='")+6);
 			while(result.indexOf("name='")!=-1)
 			{	
@@ -221,13 +223,27 @@ public class httptask extends AsyncTask<String, String, String>{
 				String a = result.substring(0, result.indexOf("'"));
 				result = result.substring(result.indexOf("value='")+7);
 				String v = result.substring(0, result.indexOf("'"));
-				this.makeHttpPost(a, v);
-				//Log.d("dc"+c, a + " " + v );
+				makeHttpPost(a, v);
+				Log.d("dc"+c, a + " " + v );
 			}
 			result = sendGETString("http://eam.unist.ac.kr/__tmax_eam_server__",para, val, true);
 			//this.clearPOST();
 			sendGETString("http://portal.unist.ac.kr/EP/web/portal/jsp/EP_Default1.jsp", para, val, true);
-			for(int i=1; i<params.length; i++)
+			login = true;
+		}
+	}
+	protected String doInBackground(String... params) {
+		try {
+			login(params[0], params[1]);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			for(int i=2; i<params.length; i++)
 			{
 				result = sendGETString(params[i], para, val, true);
 			}
@@ -248,44 +264,8 @@ public class httptask extends AsyncTask<String, String, String>{
 	protected String onPostExecute(){
 		Message msg = handle.obtainMessage();
 		Log.e("dc", "post!!!!");
-		handle.sendMessage(msg);
+		//handle.sendMessage(msg);
 		return result;
 	}
-	public class MySSLSocketFactory extends SSLSocketFactory {
-		SSLContext sslContext = SSLContext.getInstance("TLS");
-
-		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-			super(truststore);
-
-			TrustManager tm = new X509TrustManager() {
-				public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-
-				public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-
-				public X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
-
-			};
-
-			sslContext.init(null, new TrustManager[] { tm }, null);
-		}
-
-		public MySSLSocketFactory(SSLContext context) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException {
-			super(null);
-			sslContext = context;
-		}
-
-		@Override
-		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException, UnknownHostException {
-			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
-		}
-
-		@Override
-		public Socket createSocket() throws IOException {
-			return sslContext.getSocketFactory().createSocket();
-		}
-	}
+	
 }
