@@ -2,8 +2,6 @@ package com.example.unistportal;
 
 import java.util.List;
 
-import com.example.ouruniversity.R;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

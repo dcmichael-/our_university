@@ -206,7 +206,6 @@ public class httptask extends AsyncTask<String, String, String>{
 	}
 	static protected void login(String id, String pass) throws SocketTimeoutException, IOException
 	{
-		int c=0;
 		if(!login)
 		{
 			makeHttpPost("loginid",id);
@@ -258,8 +257,6 @@ public class httptask extends AsyncTask<String, String, String>{
 		return result;
 	}
 	protected String onPostExecute(){
-		Message msg = handle.obtainMessage();
-		//handle.sendMessage(msg);
 		return result;
 	}
 	
