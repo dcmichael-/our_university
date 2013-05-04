@@ -9,5 +9,10 @@
     <string name="none">\??</string>
     <string name="back">뒤로</string>
     <string name="roading">로드 중 ...</string>
+    <string name="hacsaQA">학사Q&amp;A</string>
+    <string name="hacwon">대학원공지</string>
+    <string name="sug">개선및제안</string>
+    <string name="QA">Q&amp;A</string>
+    <string name="blank"></string>
 
 </resources>

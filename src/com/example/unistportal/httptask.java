@@ -31,7 +31,6 @@ import org.apache.http.util.EntityUtils;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 public class httptask extends AsyncTask<String, String, String>{
 	static ArrayList<String> para = new ArrayList<String>();
@@ -91,7 +90,6 @@ public class httptask extends AsyncTask<String, String, String>{
 			//httpPost.setParams(new HttpParams());
 			//httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 		}
-		Log.e("get", u);
 		HttpGet httpPost = new HttpGet(u);
 		/**
 		 * Https SSL 보안 통신 방식 처리를 위한 인증 처리 부분
@@ -214,7 +212,6 @@ public class httptask extends AsyncTask<String, String, String>{
 			makeHttpPost("loginid",id);
 			makeHttpPost("password",pass);
 			result = sendGETString("https://portal.unist.ac.kr/EP/web/login/login_chk.jsp", para, val, true);
-			Log.d("dc", result);
 			//clearPOST();
 			result = result.substring(result.indexOf("name='")+6);
 			while(result.indexOf("name='")!=-1)
@@ -224,7 +221,6 @@ public class httptask extends AsyncTask<String, String, String>{
 				result = result.substring(result.indexOf("value='")+7);
 				String v = result.substring(0, result.indexOf("'"));
 				makeHttpPost(a, v);
-				Log.d("dc"+c, a + " " + v );
 			}
 			result = sendGETString("http://eam.unist.ac.kr/__tmax_eam_server__",para, val, true);
 			//this.clearPOST();
@@ -263,7 +259,6 @@ public class httptask extends AsyncTask<String, String, String>{
 	}
 	protected String onPostExecute(){
 		Message msg = handle.obtainMessage();
-		Log.e("dc", "post!!!!");
 		//handle.sendMessage(msg);
 		return result;
 	}

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:id="@+android:id/readmore"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+android:id/testlayout1"
+    android:layout_height="match_parent"
     android:gravity="center_vertical|center_horizontal"
-    >
+    android:background="@drawable/list"
+    android:orientation="horizontal" >
+
     <ProgressBar 
     android:id="@+android:id/testtext1"
        android:layout_width="30dip"
@@ -17,4 +18,5 @@
 	android:paddingLeft="3dip"
 	android:text="@string/roading"
 	/>
+
 </LinearLayout>

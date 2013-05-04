@@ -1,31 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/back" />
-
-        <WebView
-            android:id="@+id/webView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/info01"
+        android:text="asdfasfdasdfasdf" />
+
+    <TextView
+        android:id="@+id/writer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title"
+        android:background="@drawable/a"
+        android:text="writer" />
+
+    <TextView
+        android:id="@+id/mail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/writer"
+        android:background="@drawable/a"
+        android:text="mail" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mail"
+        android:background="@drawable/info02"
+        android:text="date" />
+
+    <WebView
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/btnback"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/date"
+        android:background="@drawable/cont" />
+
+    <Button
+        android:id="@+id/btnback"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_world" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#b0d3d4"
+        android:text="@string/back" />
 
-    </LinearLayout>
-
-
-</ScrollView>
+</RelativeLayout>

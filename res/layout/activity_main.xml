@@ -4,14 +4,15 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="#b0d3d4"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
-<!-- 
+
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="386dp"
@@ -25,64 +26,83 @@
             android:layout_weight="0.37" >
         </ListView>
     </LinearLayout>
--->
-    <TabHost
-        android:id="@android:id/tabhost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+    -->
+    <!--  -->
+    <com.nbpcorp.mobilead.sdk.MobileAdView
+        xmlns:mobilead="http://schemas.android.com/apk/res/com.example.ouruniversity"
+        android:id="@+id/adview1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:channel_id="testcid"
+        mobilead:test="true" >
+    </com.nbpcorp.mobilead.sdk.MobileAdView>
+    <!-- -->
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="200"
+        android:background="@drawable/list"
+        android:cacheColorHint="@color/blank" >
+
+    </ListView>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="2" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="427dp"
-            android:orientation="vertical" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-            <com.nbpcorp.mobilead.sdk.MobileAdView xmlns:mobilead="http://schemas.android.com/apk/res/com.example.ouruniversity" android:id="@+id/adview1" android:layout_width="fill_parent" android:layout_height="wrap_content" app:channel_id="testcid" mobilead:test="true">
-                </com.nbpcorp.mobilead.sdk.MobileAdView>
+            <Button
+                android:id="@+id/anon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_01"
+                android:text="@string/blank" />
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
+            <Button
+                android:id="@+id/hacsa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_02_b"
+                android:text="@string/blank" />
 
-<FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+            <Button
+                android:id="@+id/hacwon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_03_b"
+                android:text="@string/blank" />
 
-                <LinearLayout
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:baselineAligned="false">
+            <Button
+                android:id="@+id/sug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_04_b"
+                android:text="@string/blank" />
 
-                    <ListView
-                        android:id="@+id/listView1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.72" >
-                    </ListView>
+            <Button
+                android:id="@+id/QA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_05_b"
+                android:text="@string/blank" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                </LinearLayout>
-
-                
-
-            </FrameLayout>
-
+            <Button
+                android:id="@+id/hacsaQA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_06_b"
+                android:text="@string/blank" />
         </LinearLayout>
-    </TabHost>
+    </HorizontalScrollView>
 
 </LinearLayout>

@@ -7,15 +7,16 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="12" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
+        android:configChanges="orientation|keyboard"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-  		android:configChanges="orientation|keyboard"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar">
         <activity
             android:name="com.example.unistportal.MainActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -26,13 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.unistportal.Boardview"
-      android:configChanges="orientation|keyboard">
+        <activity
+            android:name="com.example.unistportal.Boardview"
+            android:configChanges="orientation|keyboard" >
             <intent-filter>
-                <action android:name="Data"/>
+                <action android:name="Data" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nbpcorp.mobilead.sdk.MobileAdBrowserActivity"/>
+        <activity android:name="com.nbpcorp.mobilead.sdk.MobileAdBrowserActivity" />
+        <activity
+            android:name="com.example.unistportal.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
     </application>
 
 </manifest>
