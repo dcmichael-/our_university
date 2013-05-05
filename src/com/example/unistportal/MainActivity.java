@@ -61,6 +61,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 		Handler handler = new Handler () {
 			@Override
 			public void handleMessage(Message msg) {
+				selboard = "B200902281833016691048";
 
 				showmain();
 			}
@@ -238,7 +239,56 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 		html = "";
 
-		selboard = "B200902281833016691048";
+		if(0==selboard.compareTo("B200902281833016691048")){
+			anon.setBackgroundResource(R.drawable.button_01);
+			hacsa.setBackgroundResource(R.drawable.button_02_b);
+			hacwon.setBackgroundResource(R.drawable.button_03_b);
+			sug.setBackgroundResource(R.drawable.button_04_b);
+			QA.setBackgroundResource(R.drawable.button_05_b);
+			hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+		}
+		else if(0==selboard.compareTo("B200902281833482321051")){
+			anon.setBackgroundResource(R.drawable.button_01_b);
+			hacsa.setBackgroundResource(R.drawable.button_02);
+			hacwon.setBackgroundResource(R.drawable.button_03_b);
+			sug.setBackgroundResource(R.drawable.button_04_b);
+			QA.setBackgroundResource(R.drawable.button_05_b);
+			hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+		}
+		else if(0==selboard.compareTo("B201003111719010571299")){
+			anon.setBackgroundResource(R.drawable.button_01_b);
+			hacsa.setBackgroundResource(R.drawable.button_02_b);
+			hacwon.setBackgroundResource(R.drawable.button_03);
+			sug.setBackgroundResource(R.drawable.button_04_b);
+			QA.setBackgroundResource(R.drawable.button_05_b);
+			hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+		}
+		else if(0==selboard.compareTo("B200805221624473331040")){
+			anon.setBackgroundResource(R.drawable.button_01_b);
+			hacsa.setBackgroundResource(R.drawable.button_02_b);
+			hacwon.setBackgroundResource(R.drawable.button_03_b);
+			sug.setBackgroundResource(R.drawable.button_04);
+			QA.setBackgroundResource(R.drawable.button_05_b);
+			hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+		}
+		else if(0==selboard.compareTo("B200806120956049151016")){
+			anon.setBackgroundResource(R.drawable.button_01_b);
+			hacsa.setBackgroundResource(R.drawable.button_02_b);
+			hacwon.setBackgroundResource(R.drawable.button_03_b);
+			sug.setBackgroundResource(R.drawable.button_04_b);
+			QA.setBackgroundResource(R.drawable.button_05);
+			hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+		}
+		else if(0==selboard.compareTo("B200903111033027841090")){
+			anon.setBackgroundResource(R.drawable.button_01_b);
+			hacsa.setBackgroundResource(R.drawable.button_02_b);
+			hacwon.setBackgroundResource(R.drawable.button_03_b);
+			sug.setBackgroundResource(R.drawable.button_04_b);
+			QA.setBackgroundResource(R.drawable.button_05_b);
+			hacsaQA.setBackgroundResource(R.drawable.button_06);
+		}
+		else
+			selboard = "B200902281833016691048";
 		ht = new httptask(httpclient);
 		httptask.clearPOST();
 		board.clear();
@@ -284,20 +334,11 @@ public class MainActivity extends Activity implements MobileAdListener {
 			//startActivity(intent);
 			setContentView(R.layout.boardview);
 			{
-				Button btn = (Button) findViewById(R.id.btnback);
 				WebView wv = (WebView) findViewById(R.id.content);
 				TextView tit = (TextView) findViewById(R.id.title);
 				TextView dat = (TextView) findViewById(R.id.date);
 				TextView wri = (TextView) findViewById(R.id.writer);
 				TextView mai = (TextView) findViewById(R.id.mail);
-				btn.setOnClickListener(new Button.OnClickListener(){
-
-					@Override
-					public void onClick(View arg0) {
-						showmain();
-					}
-
-				});
 				//Log.e("html3", html);
 				String title = html.substring(html.indexOf("제목</td>")+"제목</td>".length());
 				title = title.substring(0, title.indexOf("</td>")+"</td>".length());
@@ -310,6 +351,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 				String Writer = html.substring(html.indexOf("작성자</td>")+"작성자</td>".length());
 				Writer = Writer.substring(0, Writer.indexOf("</td>")+"</td>".length());
 				Writer = Html.fromHtml(Writer).toString();
+				Writer = Writer.replace("	", "");
 				wri.setText(""+Writer);
 				String mail = html.substring(html.indexOf("작성자메일</td>")+"작성자메일</td>".length());
 				mail = mail.substring(0,mail.indexOf("</td>")+"</td>".length());
