@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar">
         <activity
-            android:name="com.example.unistportal.MainActivity"
+            android:name="me.pedaling.ouruniv.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.unistportal.Boardview"
+            android:name="me.pedaling.ouruniv.Boardview"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard" >
             <intent-filter>
@@ -40,7 +40,7 @@
         </activity>
         <activity android:name="com.nbpcorp.mobilead.sdk.MobileAdBrowserActivity" />
         <activity
-            android:name="com.example.unistportal.SplashActivity"
+            android:name="me.pedaling.ouruniv.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />

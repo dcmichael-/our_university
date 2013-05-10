@@ -65,6 +65,7 @@
                 android:id="@+id/anon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_01"
                 android:text="@string/blank" />
 
@@ -72,6 +73,7 @@
                 android:id="@+id/hacsa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_02_b"
                 android:text="@string/blank" />
 
@@ -79,6 +81,7 @@
                 android:id="@+id/hacwon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_03_b"
                 android:text="@string/blank" />
 
@@ -86,6 +89,7 @@
                 android:id="@+id/sug"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_04_b"
                 android:text="@string/blank" />
 
@@ -93,6 +97,7 @@
                 android:id="@+id/QA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_05_b"
                 android:text="@string/blank" />
 
@@ -100,6 +105,7 @@
                 android:id="@+id/hacsaQA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button_06_b"
                 android:text="@string/blank" />
         </LinearLayout>

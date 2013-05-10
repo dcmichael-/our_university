@@ -1,4 +1,4 @@
-package com.example.unistportal;
+package me.pedaling.ouruniv;
 
 import android.app.Activity;
 import android.os.Bundle;

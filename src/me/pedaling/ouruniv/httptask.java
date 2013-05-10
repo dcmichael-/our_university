@@ -1,4 +1,4 @@
-package com.example.unistportal;
+package me.pedaling.ouruniv;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
