@@ -14,5 +14,7 @@
     <string name="sug">개선및제안</string>
     <string name="QA">Q&amp;A</string>
     <string name="blank"></string>
+    <string name="readnext">다음글</string>
+    <string name="readprev">이전글</string>
 
 </resources>

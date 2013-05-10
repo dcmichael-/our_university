@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.http.client.HttpClient;
 import com.example.ouruniversity.R;
+import com.flurry.android.FlurryAgent;
 import com.nbpcorp.mobilead.sdk.MobileAdListener;
 import com.nbpcorp.mobilead.sdk.MobileAdView;
 
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -47,14 +49,18 @@ public class MainActivity extends Activity implements MobileAdListener {
 	String selboard;
 	HttpClient httpclient = null;
 	private int page;
-	public LinearLayout mTestLayout;
+	public LinearLayout nextLayout;
+	public LinearLayout prevLayout;
 	private MobileAdView adView = null;
 	boolean a = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FlurryAgent.onStartSession(this, "Y9YTZB6SRHVSV7SQRZZ8");
+		FlurryAgent.logEvent("start", true);
 		httpclient = httptask.getNewHttpClient();
 
+		page=1;
 		setContentView(R.layout.splash);
 		//startActivity(new Intent(this, SplashActivity.class));
 
@@ -69,38 +75,94 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 		handler.sendEmptyMessageDelayed(0, 3000);
 	}
-	public void showmain()
+	public OnClickListener CategoriListner = new OnClickListener(){
+
+		@Override
+		public void onClick(View arg0) {
+			showmain();
+			//mTestLayout.setVisibility(View.VISIBLE);
+			switch(arg0.getId())
+			{
+			case R.id.anon:
+				FlurryAgent.logEvent("anon", true);
+				selboard = "B200902281833016691048";
+				anon.setBackgroundResource(R.drawable.button_01);
+				hacsa.setBackgroundResource(R.drawable.button_02_b);
+				hacwon.setBackgroundResource(R.drawable.button_03_b);
+				sug.setBackgroundResource(R.drawable.button_04_b);
+				QA.setBackgroundResource(R.drawable.button_05_b);
+				hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+				break;
+			case R.id.hacsa:
+				FlurryAgent.logEvent("hacsa", true);
+				selboard = "B200902281833482321051";
+				anon.setBackgroundResource(R.drawable.button_01_b);
+				hacsa.setBackgroundResource(R.drawable.button_02);
+				hacwon.setBackgroundResource(R.drawable.button_03_b);
+				sug.setBackgroundResource(R.drawable.button_04_b);
+				QA.setBackgroundResource(R.drawable.button_05_b);
+				hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+				break;
+			case R.id.hacwon:
+				FlurryAgent.logEvent("hacwon", true);
+				selboard = "B201003111719010571299";
+				anon.setBackgroundResource(R.drawable.button_01_b);
+				hacsa.setBackgroundResource(R.drawable.button_02_b);
+				hacwon.setBackgroundResource(R.drawable.button_03);
+				sug.setBackgroundResource(R.drawable.button_04_b);
+				QA.setBackgroundResource(R.drawable.button_05_b);
+				hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+				break;
+			case R.id.sug:
+				FlurryAgent.logEvent("sug", true);
+				selboard = "B200805221624473331040";
+				anon.setBackgroundResource(R.drawable.button_01_b);
+				hacsa.setBackgroundResource(R.drawable.button_02_b);
+				hacwon.setBackgroundResource(R.drawable.button_03_b);
+				sug.setBackgroundResource(R.drawable.button_04);
+				QA.setBackgroundResource(R.drawable.button_05_b);
+				hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+				break;
+			case R.id.QA:
+				FlurryAgent.logEvent("QA", true);
+				selboard = "B200806120956049151016";
+				anon.setBackgroundResource(R.drawable.button_01_b);
+				hacsa.setBackgroundResource(R.drawable.button_02_b);
+				hacwon.setBackgroundResource(R.drawable.button_03_b);
+				sug.setBackgroundResource(R.drawable.button_04_b);
+				QA.setBackgroundResource(R.drawable.button_05);
+				hacsaQA.setBackgroundResource(R.drawable.button_06_b);
+				break;
+			case R.id.hacsaQA:
+				FlurryAgent.logEvent("hacsaQA", true);
+				selboard = "B200903111033027841090";
+				anon.setBackgroundResource(R.drawable.button_01_b);
+				hacsa.setBackgroundResource(R.drawable.button_02_b);
+				hacwon.setBackgroundResource(R.drawable.button_03_b);
+				sug.setBackgroundResource(R.drawable.button_04_b);
+				QA.setBackgroundResource(R.drawable.button_05_b);
+				hacsaQA.setBackgroundResource(R.drawable.button_06);
+				break;
+			}
+
+			ht = new httptask(httpclient);
+			httptask.clearPOST();
+			board.clear();
+			aa.clear();
+			arr.clear();
+			page=1;
+			httptask.makehandler(handler);
+			httptask.makeHttpPost("boardid",selboard);
+			httptask.makeHttpPost("nfirst",""+page);
+			ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+
+		}
+	};
+	public void setbuttonlist(int view)
 	{
-		//loaded=false;
 
-		setContentView(R.layout.activity_main);
-
-		adView = (MobileAdView) findViewById(R.id.adview1);;
-		//adView.setTest(true);
-		adView.setListener(this);
-		adView.setTest(false);
-		adView.setChannelID("mandroid_634225d2b27d44d3b1e74db6c9238be5");
-		adView.start();
-
-		lv = (ListView) findViewById(R.id.listView1);
-		arr = new ArrayList<Spanned>();
-		arr2 = new ArrayList<String>();
+		setContentView(view);
 		btnlist = new ArrayList<Button>();
-
-		mTestLayout = (LinearLayout) View.inflate(this, R.layout.readmore, null);
-		mTestLayout.setVisibility(View.VISIBLE);
-		html = "";
-		//arr.add(html);
-
-		aa = new myadapter<Spanned>(this, R.layout.mylist, arr);
-		aa2 = new myadapter<String>(this, R.layout.mylist, arr2);
-		arr2.add("전체공지");
-		arr2.add("학사공지");
-		arr2.add("대학원공지");
-		arr2.add("개선및 제안");
-		arr2.add("Q&A");
-		arr2.add("학사Q&A");
-
 		anon = ((Button)findViewById(R.id.anon));
 		hacsa = ((Button)findViewById(R.id.hacsa));
 		hacwon = ((Button)findViewById(R.id.hacwon));
@@ -113,131 +175,11 @@ public class MainActivity extends Activity implements MobileAdListener {
 		btnlist.add(sug);
 		btnlist.add(QA);
 		btnlist.add(hacsaQA);
+		
 		for(Button b:btnlist)
 		{
-			b.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View arg0) {
-					//mTestLayout.setVisibility(View.VISIBLE);
-					switch(arg0.getId())
-					{
-					case R.id.anon:
-						selboard = "B200902281833016691048";
-						anon.setBackgroundResource(R.drawable.button_01);
-						hacsa.setBackgroundResource(R.drawable.button_02_b);
-						hacwon.setBackgroundResource(R.drawable.button_03_b);
-						sug.setBackgroundResource(R.drawable.button_04_b);
-						QA.setBackgroundResource(R.drawable.button_05_b);
-						hacsaQA.setBackgroundResource(R.drawable.button_06_b);
-						break;
-					case R.id.hacsa:
-						selboard = "B200902281833482321051";
-						anon.setBackgroundResource(R.drawable.button_01_b);
-						hacsa.setBackgroundResource(R.drawable.button_02);
-						hacwon.setBackgroundResource(R.drawable.button_03_b);
-						sug.setBackgroundResource(R.drawable.button_04_b);
-						QA.setBackgroundResource(R.drawable.button_05_b);
-						hacsaQA.setBackgroundResource(R.drawable.button_06_b);
-						break;
-					case R.id.hacwon:
-						selboard = "B201003111719010571299";
-						anon.setBackgroundResource(R.drawable.button_01_b);
-						hacsa.setBackgroundResource(R.drawable.button_02_b);
-						hacwon.setBackgroundResource(R.drawable.button_03);
-						sug.setBackgroundResource(R.drawable.button_04_b);
-						QA.setBackgroundResource(R.drawable.button_05_b);
-						hacsaQA.setBackgroundResource(R.drawable.button_06_b);
-						break;
-					case R.id.sug:
-						selboard = "B200805221624473331040";
-						anon.setBackgroundResource(R.drawable.button_01_b);
-						hacsa.setBackgroundResource(R.drawable.button_02_b);
-						hacwon.setBackgroundResource(R.drawable.button_03_b);
-						sug.setBackgroundResource(R.drawable.button_04);
-						QA.setBackgroundResource(R.drawable.button_05_b);
-						hacsaQA.setBackgroundResource(R.drawable.button_06_b);
-						break;
-					case R.id.QA:
-						selboard = "B200806120956049151016";
-						anon.setBackgroundResource(R.drawable.button_01_b);
-						hacsa.setBackgroundResource(R.drawable.button_02_b);
-						hacwon.setBackgroundResource(R.drawable.button_03_b);
-						sug.setBackgroundResource(R.drawable.button_04_b);
-						QA.setBackgroundResource(R.drawable.button_05);
-						hacsaQA.setBackgroundResource(R.drawable.button_06_b);
-						break;
-					case R.id.hacsaQA:
-						selboard = "B200903111033027841090";
-						anon.setBackgroundResource(R.drawable.button_01_b);
-						hacsa.setBackgroundResource(R.drawable.button_02_b);
-						hacwon.setBackgroundResource(R.drawable.button_03_b);
-						sug.setBackgroundResource(R.drawable.button_04_b);
-						QA.setBackgroundResource(R.drawable.button_05_b);
-						hacsaQA.setBackgroundResource(R.drawable.button_06);
-						break;
-					}
-					ht = new httptask(httpclient);
-					httptask.clearPOST();
-					board.clear();
-					aa.clear();
-					arr.clear();
-					page=1;
-					httptask.makehandler(handler);
-					httptask.makeHttpPost("boardid",selboard);
-					httptask.makeHttpPost("nfirst",""+page);
-					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
-
-				}
-
-			});
+			b.setOnClickListener(CategoriListner);
 		}
-		//lv2 = (ListView) findViewById(R.id.listView2);
-		lv.addFooterView(mTestLayout);
-		lv.setAdapter(aa);
-		//lv2.setAdapter(aa2);
-		int max_len=0;
-		for(int i=0; i<arr2.size(); i++)
-		{
-			if(max_len<arr2.get(i).length())
-				max_len = arr2.get(i).length();
-		}
-
-		lv.setOnItemClickListener(new ListView.OnItemClickListener(){
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
-					long arg3) {
-
-				if(index>=board.size())
-				{
-					ht = new httptask(httpclient);
-					httptask.clearPOST();
-					//board.clear();
-					//aa.clear();
-					//arr.clear();
-					page++;
-					httptask.makehandler(handler);
-					httptask.makeHttpPost("boardid",selboard);
-					httptask.makeHttpPost("nfirst",""+page);
-					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
-				}
-				else
-				{
-					Board a = board.get(index);
-					ht = new httptask(httpclient);
-					httptask.makeHttpPost("boardid",selboard);
-					httptask.makeHttpPost("bullid", a.bullid);
-					httptask.makeHttpPost("nkid", a.row_id);
-					httptask.makeHttpPost("rkid", a.top_bullid);
-					httptask.makehandler(bhandler);
-					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardView.jsp");
-				}
-			}
-
-		});
-
-		html = "";
 
 		if(0==selboard.compareTo("B200902281833016691048")){
 			anon.setBackgroundResource(R.drawable.button_01);
@@ -289,18 +231,170 @@ public class MainActivity extends Activity implements MobileAdListener {
 		}
 		else
 			selboard = "B200902281833016691048";
+	}
+	public void showmain()
+	{
+		//loaded=false;
+		FlurryAgent.logEvent("mainlist", true);
+
+		setbuttonlist(R.layout.activity_main);
+		Log.println(Log.ASSERT, "aaa", "page : "+page);
+
+		adView = (MobileAdView) findViewById(R.id.adview1);;
+		//adView.setTest(true);
+		adView.setListener(this);
+		adView.setTest(false);
+		adView.setChannelID("mandroid_634225d2b27d44d3b1e74db6c9238be5");
+		adView.start();
+
+		lv = (ListView) findViewById(R.id.listView1);
+		arr = new ArrayList<Spanned>();
+		arr2 = new ArrayList<String>();
+
+		nextLayout = (LinearLayout) View.inflate(this, R.layout.readnext, null);
+		nextLayout.setVisibility(View.VISIBLE);
+		prevLayout = (LinearLayout) View.inflate(this, R.layout.readprev, null);
+		if(page!=1)
+		{
+			prevLayout.setVisibility(View.VISIBLE);
+		}
+		if(page==1)
+		{
+			prevLayout.setVisibility(View.INVISIBLE);
+		}
+		html = "";
+		//arr.add(html);
+
+		aa = new myadapter<Spanned>(this, R.layout.mylist, arr);
+		aa2 = new myadapter<String>(this, R.layout.mylist, arr2);
+		arr2.add("전체공지");
+		arr2.add("학사공지");
+		arr2.add("대학원공지");
+		arr2.add("개선및 제안");
+		arr2.add("Q&A");
+		arr2.add("학사Q&A");
+
+
+		//lv2 = (ListView) findViewById(R.id.listView2);
+		lv.addFooterView(nextLayout);
+		lv.addHeaderView(prevLayout);
+		lv.setAdapter(aa);
+		board.clear();
+		aa.clear();
+		arr.clear();
+		//lv2.setAdapter(aa2);
+		int max_len=0;
+		for(int i=0; i<arr2.size(); i++)
+		{
+			if(max_len<arr2.get(i).length())
+				max_len = arr2.get(i).length();
+		}
+
+		lv.setOnItemClickListener(new ListView.OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
+					long arg3) {
+				Log.println(Log.ASSERT, "index", "index : "+index);
+				if(index==0)
+				{
+
+					ht = new httptask(httpclient);
+					httptask.clearPOST();
+					//board.clear();
+					//aa.clear();
+					//arr.clear();
+					page--;
+					httptask.makehandler(handler);
+					httptask.makeHttpPost("boardid",selboard);
+					httptask.makeHttpPost("nfirst",""+page);
+					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+					if(page==1)
+					{
+						prevLayout.setVisibility(View.INVISIBLE);
+					}
+					lv.setSelection(1);
+				}
+				else if(index>=board.size())
+				{
+					ht = new httptask(httpclient);
+					httptask.clearPOST();
+					//board.clear();
+					//aa.clear();
+					//arr.clear();
+					page++;
+					httptask.makehandler(handler);
+					httptask.makeHttpPost("boardid",selboard);
+					httptask.makeHttpPost("nfirst",""+page);
+					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+					
+					prevLayout.setVisibility(View.VISIBLE);
+					lv.setSelection(1);
+				}
+				else
+				{
+					Board a = board.get(index-1);
+					ht = new httptask(httpclient);
+					httptask.makeHttpPost("boardid",selboard);
+					httptask.makeHttpPost("bullid", a.bullid);
+					httptask.makeHttpPost("nkid", a.row_id);
+					httptask.makeHttpPost("rkid", a.top_bullid);
+					httptask.makehandler(bhandler);
+					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardView.jsp");
+				}
+			}
+
+		});
+		html = "";
+
 		ht = new httptask(httpclient);
 		httptask.clearPOST();
 		board.clear();
 		aa.clear();
 		arr.clear();
-		page=1;
 		httptask.makehandler(handler);
 		httptask.makeHttpPost("boardid",selboard);
 		httptask.makeHttpPost("nfirst",""+page);
 		ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
 	}
+	public void showcontents()
+	{
+		FlurryAgent.logEvent("contentsview", true);
+		setbuttonlist(R.layout.boardview);
+		WebView wv = (WebView) findViewById(R.id.content);
+		TextView tit = (TextView) findViewById(R.id.title);
+		TextView dat = (TextView) findViewById(R.id.date);
+		TextView wri = (TextView) findViewById(R.id.writer);
+		TextView mai = (TextView) findViewById(R.id.mail);
+		//Log.e("html3", html);
+		String title = html.substring(html.indexOf("제목</td>")+"제목</td>".length());
+		title = title.substring(0, title.indexOf("</td>")+"</td>".length());
+		title = Html.fromHtml(title).toString();
+		tit.setText(""+title);
+		String uploaddate = html.substring(html.indexOf("게시일</td>")+"게시일</td>".length());
+		uploaddate = uploaddate.substring(0, uploaddate.indexOf("</td>")+"</td>".length());
+		uploaddate = Html.fromHtml(uploaddate).toString();
+		dat.setText(""+uploaddate);
+		String Writer = html.substring(html.indexOf("작성자</td>")+"작성자</td>".length());
+		Writer = Writer.substring(0, Writer.indexOf("</td>")+"</td>".length());
+		Writer = Html.fromHtml(Writer).toString();
+		Writer = Writer.replace("	", "");
+		wri.setText(""+Writer);
+		String mail = html.substring(html.indexOf("작성자메일</td>")+"작성자메일</td>".length());
+		mail = mail.substring(0,mail.indexOf("</td>")+"</td>".length());
+		mail = Html.fromHtml(mail).toString();
+		mai.setText(""+mail);
+		html = html.substring(html.indexOf("<!--게시물 내용-->"), html.indexOf("<td class=\"td_bg\" colspan=\"2\">"));
+		tit.setTextColor(Color.BLACK);
+		dat.setTextColor(Color.BLACK);
+		wri.setTextColor(Color.BLACK);
+		mai.setTextColor(Color.BLACK);
+		wv.setBackgroundColor(0);
+		wv.loadDataWithBaseURL("", html, "text/html", "utf-8", null);
 
+		//Spanned a = Html.fromHtml(html);
+		//tv2.setText(html);
+	}
 	public class Board
 	{
 		Spanned title;
@@ -332,42 +426,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 			//Intent intent = new Intent(MainActivity.this, Boardview.class);
 			//intent.putExtra("Data", html);
 			//startActivity(intent);
-			setContentView(R.layout.boardview);
-			{
-				WebView wv = (WebView) findViewById(R.id.content);
-				TextView tit = (TextView) findViewById(R.id.title);
-				TextView dat = (TextView) findViewById(R.id.date);
-				TextView wri = (TextView) findViewById(R.id.writer);
-				TextView mai = (TextView) findViewById(R.id.mail);
-				//Log.e("html3", html);
-				String title = html.substring(html.indexOf("제목</td>")+"제목</td>".length());
-				title = title.substring(0, title.indexOf("</td>")+"</td>".length());
-				title = Html.fromHtml(title).toString();
-				tit.setText(""+title);
-				String uploaddate = html.substring(html.indexOf("게시일</td>")+"게시일</td>".length());
-				uploaddate = uploaddate.substring(0, uploaddate.indexOf("</td>")+"</td>".length());
-				uploaddate = Html.fromHtml(uploaddate).toString();
-				dat.setText(""+uploaddate);
-				String Writer = html.substring(html.indexOf("작성자</td>")+"작성자</td>".length());
-				Writer = Writer.substring(0, Writer.indexOf("</td>")+"</td>".length());
-				Writer = Html.fromHtml(Writer).toString();
-				Writer = Writer.replace("	", "");
-				wri.setText(""+Writer);
-				String mail = html.substring(html.indexOf("작성자메일</td>")+"작성자메일</td>".length());
-				mail = mail.substring(0,mail.indexOf("</td>")+"</td>".length());
-				mail = Html.fromHtml(mail).toString();
-				mai.setText(""+mail);
-				html = html.substring(html.indexOf("<!--게시물 내용-->"), html.indexOf("<td class=\"td_bg\" colspan=\"2\">"));
-				tit.setTextColor(Color.BLACK);
-				dat.setTextColor(Color.BLACK);
-				wri.setTextColor(Color.BLACK);
-				mai.setTextColor(Color.BLACK);
-				wv.setBackgroundColor(0);
-				wv.loadDataWithBaseURL("", html, "text/html", "utf-8", null);
-				
-				//Spanned a = Html.fromHtml(html);
-				//tv2.setText(html);
-			}	
+			showcontents();
 		}
 	};
 	public Handler handler = new Handler()  {
@@ -378,7 +437,9 @@ public class MainActivity extends Activity implements MobileAdListener {
 			html = httptask.result;//.substring(ht.result.indexOf("title=")+8);
 
 			html = html.substring(html.indexOf("clickBulletin")+"clickBulletin(\"".length());
-
+			arr.clear();
+			aa.clear();
+			board.clear();
 			while(html.indexOf("clickBulletin")!=-1)
 			{
 				html = html.substring(html.indexOf("checkbox")+5);
@@ -418,14 +479,17 @@ public class MainActivity extends Activity implements MobileAdListener {
 				html = html.substring(html.indexOf("\"")+1);
 				arr.add(Html.fromHtml(num+" "+titlesource));
 				aa.notifyDataSetChanged();
+				lv.setSelection(1);
 				//mTestLayout.setVisibility(View.INVISIBLE);
 			} 
+			lv.setSelection(1);
 		}
 
 	};
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		FlurryAgent.onEndSession(this);
 		if(adView != null){
 			adView.destroy();
 			adView = null;
@@ -433,7 +497,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 	}
 	public void onReceive(int arg0)
 	{
-		
+
 	}
 
 	@Override
@@ -445,6 +509,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		if(keyCode == KeyEvent.KEYCODE_BACK){
+			Log.println(Log.ASSERT, "aaa", "page : "+page);
 			showmain();
 			return false;
 		}
