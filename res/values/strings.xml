@@ -16,5 +16,9 @@
     <string name="blank"></string>
     <string name="readnext">다음글</string>
     <string name="readprev">이전글</string>
+    <string name="title">제목</string>
+    <string name="date">게시일</string>
+    <string name="writer">작성자</string>
+    <string name="wmail">메일</string>
 
 </resources>

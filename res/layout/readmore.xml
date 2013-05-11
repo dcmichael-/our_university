@@ -3,8 +3,8 @@
     android:id="@+android:id/readmore"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
-    android:background="@drawable/list"
+    android:gravity="center"
+    android:background="#ffffff"
     android:orientation="horizontal" >
 
     <ProgressBar 

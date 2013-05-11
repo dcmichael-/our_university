@@ -295,7 +295,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
 					long arg3) {
-				Log.println(Log.ASSERT, "index", "index : "+index);
+				Log.println(Log.ASSERT, "index", "index : "+index+"size : "+board.size());
 				if(index==0)
 				{
 
@@ -315,7 +315,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 					}
 					lv.setSelection(1);
 				}
-				else if(index>=board.size())
+				else if(index>board.size())
 				{
 					ht = new httptask(httpclient);
 					httptask.clearPOST();

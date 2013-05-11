@@ -43,8 +43,8 @@
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/d10"
         android:layout_weight="200"
-        android:background="@drawable/list"
         android:cacheColorHint="@color/blank" >
 
     </ListView>
