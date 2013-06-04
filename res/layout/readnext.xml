@@ -8,9 +8,10 @@
     android:orientation="horizontal" >
 
     <ProgressBar 
-    android:id="@+android:id/testtext1"
+    android:id="@+id/testtext1"
        android:layout_width="30dip"
-       android:layout_height="30dip" />
+       android:layout_height="30dip"
+        />
     <TextView 
 	android:id="@+id/testtext"
 	android:layout_width="80dip"

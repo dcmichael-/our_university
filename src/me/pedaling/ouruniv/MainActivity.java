@@ -3,7 +3,7 @@ package me.pedaling.ouruniv;
 import java.util.ArrayList;
 
 import org.apache.http.client.HttpClient;
-import com.example.ouruniversity.R;
+import me.pedaling.ouruniv.R;
 import com.flurry.android.FlurryAgent;
 import com.nbpcorp.mobilead.sdk.MobileAdListener;
 import com.nbpcorp.mobilead.sdk.MobileAdView;
@@ -21,12 +21,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements MobileAdListener {
 	TextView tv2;
@@ -56,6 +59,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		FlurryAgent.onStartSession(this, "Y9YTZB6SRHVSV7SQRZZ8");
 		FlurryAgent.logEvent("start", true);
 		httpclient = httptask.getNewHttpClient();
@@ -79,7 +83,6 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 		@Override
 		public void onClick(View arg0) {
-			showmain();
 			//mTestLayout.setVisibility(View.VISIBLE);
 			switch(arg0.getId())
 			{
@@ -145,16 +148,18 @@ public class MainActivity extends Activity implements MobileAdListener {
 				break;
 			}
 
-			ht = new httptask(httpclient);
-			httptask.clearPOST();
-			board.clear();
-			aa.clear();
-			arr.clear();
 			page=1;
-			httptask.makehandler(handler);
-			httptask.makeHttpPost("boardid",selboard);
-			httptask.makeHttpPost("nfirst",""+page);
-			ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+			showmain();
+//			ht = new httptask(httpclient);
+//			httptask.clearPOST();
+//			board.clear();
+//			aa.clear();
+//			arr.clear();
+//			aa.notifyDataSetChanged();
+//			httptask.makehandler(handler);
+//			httptask.makeHttpPost("boardid",selboard);
+//			httptask.makeHttpPost("nfirst",""+page);
+//			ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
 
 		}
 	};
@@ -249,7 +254,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 		lv = (ListView) findViewById(R.id.listView1);
 		arr = new ArrayList<Spanned>();
-		arr2 = new ArrayList<String>();
+		//arr2 = new ArrayList<String>();
 
 		nextLayout = (LinearLayout) View.inflate(this, R.layout.readnext, null);
 		nextLayout.setVisibility(View.VISIBLE);
@@ -266,14 +271,14 @@ public class MainActivity extends Activity implements MobileAdListener {
 		//arr.add(html);
 
 		aa = new myadapter<Spanned>(this, R.layout.mylist, arr);
-		aa2 = new myadapter<String>(this, R.layout.mylist, arr2);
-		arr2.add("전체공지");
-		arr2.add("학사공지");
-		arr2.add("대학원공지");
-		arr2.add("개선및 제안");
-		arr2.add("Q&A");
-		arr2.add("학사Q&A");
-
+		//aa2 = new myadapter<String>(this, R.layout.mylist, arr2);
+//		arr2.add("전체공지");
+//		arr2.add("학사공지");
+//		arr2.add("대학원공지");
+//		arr2.add("개선및 제안");
+//		arr2.add("Q&A");
+//		arr2.add("학사Q&A");
+		((TextView)nextLayout.findViewById(R.id.testtext)).setText("로딩중");
 
 		//lv2 = (ListView) findViewById(R.id.listView2);
 		lv.addFooterView(nextLayout);
@@ -282,13 +287,14 @@ public class MainActivity extends Activity implements MobileAdListener {
 		board.clear();
 		aa.clear();
 		arr.clear();
+		aa.notifyDataSetChanged();
 		//lv2.setAdapter(aa2);
-		int max_len=0;
-		for(int i=0; i<arr2.size(); i++)
-		{
-			if(max_len<arr2.get(i).length())
-				max_len = arr2.get(i).length();
-		}
+//		int max_len=0;
+//		for(int i=0; i<arr2.size(); i++)
+//		{
+//			if(max_len<arr2.get(i).length())
+//				max_len = arr2.get(i).length();
+//		}
 
 		lv.setOnItemClickListener(new ListView.OnItemClickListener(){
 
@@ -296,26 +302,27 @@ public class MainActivity extends Activity implements MobileAdListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
 					long arg3) {
 				Log.println(Log.ASSERT, "index", "index : "+index+"size : "+board.size());
-				if(index==0)
-				{
-
-					ht = new httptask(httpclient);
-					httptask.clearPOST();
-					//board.clear();
-					//aa.clear();
-					//arr.clear();
-					page--;
-					httptask.makehandler(handler);
-					httptask.makeHttpPost("boardid",selboard);
-					httptask.makeHttpPost("nfirst",""+page);
-					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
-					if(page==1)
-					{
-						prevLayout.setVisibility(View.INVISIBLE);
-					}
-					lv.setSelection(1);
-				}
-				else if(index>board.size())
+//				if(index==0)
+//				{
+//
+//					ht = new httptask(httpclient);
+//					httptask.clearPOST();
+//					//board.clear();
+//					//aa.clear();
+//					//arr.clear();
+//					page--;
+//					httptask.makehandler(handler);
+//					httptask.makeHttpPost("boardid",selboard);
+//					httptask.makeHttpPost("nfirst",""+page);
+//					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+//					if(page==1)
+//					{
+//						prevLayout.setVisibility(View.INVISIBLE);
+//					}
+//					lv.setSelection(1);
+//				}
+//				else
+				if(index>board.size())
 				{
 					ht = new httptask(httpclient);
 					httptask.clearPOST();
@@ -328,8 +335,8 @@ public class MainActivity extends Activity implements MobileAdListener {
 					httptask.makeHttpPost("nfirst",""+page);
 					ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
 					
-					prevLayout.setVisibility(View.VISIBLE);
-					lv.setSelection(1);
+					//prevLayout.setVisibility(View.VISIBLE);
+					//lv.setSelection(1);
 				}
 				else
 				{
@@ -347,21 +354,25 @@ public class MainActivity extends Activity implements MobileAdListener {
 		});
 		html = "";
 
-		ht = new httptask(httpclient);
-		httptask.clearPOST();
 		board.clear();
 		aa.clear();
 		arr.clear();
+		aa.notifyDataSetChanged();
+		ht = new httptask(httpclient);
+		httptask.clearPOST();
 		httptask.makehandler(handler);
 		httptask.makeHttpPost("boardid",selboard);
 		httptask.makeHttpPost("nfirst",""+page);
 		ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+		
 	}
 	public void showcontents()
 	{
 		FlurryAgent.logEvent("contentsview", true);
 		setbuttonlist(R.layout.boardview);
 		WebView wv = (WebView) findViewById(R.id.content);
+		wv.getSettings().setBuiltInZoomControls(true);
+		wv.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 		TextView tit = (TextView) findViewById(R.id.title);
 		TextView dat = (TextView) findViewById(R.id.date);
 		TextView wri = (TextView) findViewById(R.id.writer);
@@ -385,6 +396,21 @@ public class MainActivity extends Activity implements MobileAdListener {
 		mail = Html.fromHtml(mail).toString();
 		mai.setText(""+mail);
 		html = html.substring(html.indexOf("<!--게시물 내용-->"), html.indexOf("<td class=\"td_bg\" colspan=\"2\">"));
+		int indchum=-1;
+		
+		if((indchum=html.indexOf("<iframe name=\"IFR_ATT_CON\" id=\"IFR_ATT_CON\""))!=-1)
+		{
+			String html1 = html.substring(0, indchum);
+			String html2 = html.substring(html.indexOf("</iframe>"));
+			html = html1 + "첨부파일이 있습니다. windows 에서 확인하세요" + html2;
+		}
+		if((indchum=html.indexOf("첨부파일"))!=-1)
+		{
+			html = html.substring(0, indchum);
+			html += "첨부파일이 있습니다. windows 에서 확인하세요";
+		}
+		 
+		
 		tit.setTextColor(Color.BLACK);
 		dat.setTextColor(Color.BLACK);
 		wri.setTextColor(Color.BLACK);
@@ -415,11 +441,23 @@ public class MainActivity extends Activity implements MobileAdListener {
 		}
 	};
 	ArrayList<Board> board= new ArrayList<Board>();
+	public Handler ehandler = new Handler()
+	{
+		public void handleMessage(Message msg)
+		{
 
+            Toast.makeText(getApplicationContext(), "아직 로드중입니다.", Toast.LENGTH_SHORT).show();
+		}
+	};
 	public Handler bhandler = new Handler()
 	{
 		public void handleMessage(Message msg)
 		{
+			if(msg.what==1)
+			{
+	            Toast.makeText(getApplicationContext(), "아직 로드중입니다.", Toast.LENGTH_SHORT).show();
+	            return;
+			}
 			if(httptask.result==null)
 				return;
 			html = httptask.result;
@@ -432,14 +470,19 @@ public class MainActivity extends Activity implements MobileAdListener {
 	public Handler handler = new Handler()  {
 
 		public void handleMessage(Message msg)  {
+			if(msg.what==1)
+			{
+	            Toast.makeText(getApplicationContext(), "아직 로드중입니다.", Toast.LENGTH_SHORT).show();
+	            return;
+			}
 			if(httptask.result==null)
 				return;
 			html = httptask.result;//.substring(ht.result.indexOf("title=")+8);
 
 			html = html.substring(html.indexOf("clickBulletin")+"clickBulletin(\"".length());
-			arr.clear();
-			aa.clear();
-			board.clear();
+			//arr.clear();
+			//aa.clear();
+			//board.clear();
 			while(html.indexOf("clickBulletin")!=-1)
 			{
 				html = html.substring(html.indexOf("checkbox")+5);
@@ -449,11 +492,13 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 				//Log.println(Log.ASSERT, "num", ""+end);
 				//Log.println(Log.ASSERT, "html", html);
-				String num;
-				if(end<10)
+				String num = html.substring("<nobr>".length(), end);
+				if(num.compareTo("&nbsp;")==0)
 					num = html.substring(6, end);
-				else
+				else if(num.startsWith("<img"))
 					num="공지";
+				else
+					num = html.substring(6, end);
 				//Log.println(Log.ASSERT, "num", ""+num);
 				html = html.substring(html.indexOf("</nobr>"));
 				html = html.substring(html.indexOf("clickBulletin")+"clickBulletin(\"".length());
@@ -468,7 +513,10 @@ public class MainActivity extends Activity implements MobileAdListener {
 
 				html = html.substring(html.indexOf("<font"));
 				String titlesource = html.substring(0, html.indexOf("</font>")+7);
+				titlesource = titlesource.replace("color=", "size=12 color=");
+				Log.e("title:", titlesource);
 				Spanned title = Html.fromHtml(titlesource);
+				
 				bullid = bullid.replace("\'", "");
 				row_id = row_id.replace("\'", "");
 				top_bulid = top_bulid.replace("\'", "");
@@ -477,12 +525,25 @@ public class MainActivity extends Activity implements MobileAdListener {
 				Board b = new Board(num, title, bullid, row_id, top_bulid, Integer.valueOf(depth));
 				board.add(b);
 				html = html.substring(html.indexOf("\"")+1);
-				arr.add(Html.fromHtml(num+" "+titlesource));
+				aa.add(Html.fromHtml(num+" "+titlesource));
 				aa.notifyDataSetChanged();
-				lv.setSelection(1);
+				//lv.setSelection(1);
 				//mTestLayout.setVisibility(View.INVISIBLE);
 			} 
-			lv.setSelection(1);
+			//lv.setSelection(1);
+			
+			((ProgressBar)nextLayout.findViewById(R.id.testtext1)).setVisibility(View.INVISIBLE);
+			((TextView)nextLayout.findViewById(R.id.testtext)).setText("다음글");
+			if(page==1)
+			{
+				page++;
+				ht = new httptask(httpclient);
+				httptask.clearPOST();
+				httptask.makehandler(handler);
+				httptask.makeHttpPost("boardid",selboard);
+				httptask.makeHttpPost("nfirst",""+page);
+				ht.execute("dcmichael1256", "bd0775de61645be9a39de434d178580e", "http://portal.unist.ac.kr/EP/web/collaboration/bbs/jsp/BB_BoardLst.jsp");
+			}
 		}
 
 	};
@@ -509,6 +570,7 @@ public class MainActivity extends Activity implements MobileAdListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		if(keyCode == KeyEvent.KEYCODE_BACK){
+			page=1;
 			Log.println(Log.ASSERT, "aaa", "page : "+page);
 			showmain();
 			return false;

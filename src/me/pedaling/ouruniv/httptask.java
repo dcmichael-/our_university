@@ -28,9 +28,11 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 public class httptask extends AsyncTask<String, String, String>{
 	static ArrayList<String> para = new ArrayList<String>();
@@ -39,6 +41,8 @@ public class httptask extends AsyncTask<String, String, String>{
 	static HttpClient httpclient;
 	static Handler handle;
 	static boolean login = false;
+	static boolean running = false;
+	public static Context cont;
 	public static void makehandler(Handler h)
 	{
 		handle = h;
@@ -66,7 +70,7 @@ public class httptask extends AsyncTask<String, String, String>{
 		val.clear();
 	}
 	public static String sendGETString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
-			{
+	{
 		String u = url;
 		int len = 0;
 
@@ -108,9 +112,9 @@ public class httptask extends AsyncTask<String, String, String>{
 		//Log.e("HYY", "response:" + response);
 
 		return response;
-			}
+	}
 	public static String sendPOSTString(String url, ArrayList<String> params, ArrayList<String> values, boolean isParam) throws SocketTimeoutException, IOException
-			{
+	{
 
 		HttpPost httpPost = new HttpPost(url);
 		int len = 0;
@@ -153,7 +157,7 @@ public class httptask extends AsyncTask<String, String, String>{
 		//Log.e("HYY", "response:" + response);
 
 		return response;
-		}
+	}
 	public static void setHttpClient(HttpClient ht)
 	{
 		httpclient = ht;
@@ -228,36 +232,45 @@ public class httptask extends AsyncTask<String, String, String>{
 		}
 	}
 	protected String doInBackground(String... params) {
-		try {
-			login(params[0], params[1]);
-		} catch (SocketTimeoutException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			for(int i=2; i<params.length; i++)
-			{
-				result = sendGETString(params[i], para, val, true);
+		if(!running)
+		{
+			running=true;
+			try {
+				login(params[0], params[1]);
+			} catch (SocketTimeoutException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			try {
+				for(int i=2; i<params.length; i++)
+				{
+					result = sendGETString(params[i], para, val, true);
+				}
 
-		} catch (SocketTimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (SocketTimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//Log.e("http", result);
+			Message msg = handle.obtainMessage();
+
+			handle.sendMessage(msg);
+			running=false;
 		}
-		//Log.e("http", result);
-		Message msg = handle.obtainMessage();
-
-		handle.sendMessage(msg);
+		else
+		{
+			handle.sendEmptyMessage(1);
+		}
 		return result;
 	}
 	protected String onPostExecute(){
 		return result;
 	}
-	
+
 }

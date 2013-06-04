@@ -2,7 +2,7 @@ package me.pedaling.ouruniv;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.example.ouruniversity.R;
+import me.pedaling.ouruniv.R;
 
 public class Boardview extends Activity {
 	String html;

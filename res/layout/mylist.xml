@@ -3,13 +3,15 @@
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/d1"
-    android:layout_marginTop="@dimen/d1"
+    android:layout_marginBottom="@dimen/d10"
+    android:layout_marginTop="@dimen/d10"
     android:background="#ffffff"
     android:gravity="center_vertical"
     android:maxLines="@integer/one"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingBottom="@dimen/d10"
+    android:paddingTop="@dimen/d10"
     android:text="Loading"
     android:textAppearance="?android:attr/textAppearanceLarge"
-    android:textColor="#000000" />
+    android:textColor="#000000"
+    android:textSize="15sp" />
 
